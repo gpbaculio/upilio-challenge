@@ -6,10 +6,11 @@ import {
   withTiming,
   runOnJS,
 } from "react-native-reanimated";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { AnimatedView, TouchableOpacityBox, Text, Box } from "../../index";
 import theme from "@/constants/restyleTheme";
-import { ScrollView } from "react-native-gesture-handler";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 
 const buttons = [
   { label: "Weight" },
@@ -17,8 +18,46 @@ const buttons = [
   { label: "Vet Visits" },
 ];
 
+type Item = {
+  id: string;
+  title: string;
+};
+
+const DATA: Item[] = [
+  { id: "1", title: "Item 1" },
+  { id: "2", title: "Item 2" },
+];
+
+const ItemComponent: React.FC<{ title: string }> = ({ title }) => (
+  <Box
+    width="98%"
+    borderColor="light"
+    borderWidth={1}
+    alignSelf="center"
+    backgroundColor="white"
+    p="M"
+    borderRadius={4}
+    flexDirection="row"
+    alignItems="center"
+    style={{ ...theme.shadows["sm"] }}
+    justifyContent="space-between"
+  >
+    <Box flexDirection="row" alignItems="center">
+      <Box backgroundColor="light" p="XS" borderRadius={4}>
+        <FontAwesome name="stethoscope" size={24} color="purple" />
+      </Box>
+      <Box ml="S">
+        <Text fontWeight="600">2.00 lbs</Text>
+        <Text opacity={0.6}>11/12/2023</Text>
+      </Box>
+    </Box>
+
+    <FontAwesome name="trash" size={24} color="red" />
+  </Box>
+);
+
 const CategoriesToggle = () => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [isAnimating, setIsAnimating] = useState(false);
   const toggleValue = useSharedValue(0);
 
@@ -48,6 +87,10 @@ const CategoriesToggle = () => {
   }));
 
   const id = useId();
+
+  const renderItem = ({ item }: { item: Item }) => (
+    <ItemComponent title={item.title} />
+  );
 
   return (
     <Box flex={1}>
@@ -93,14 +136,13 @@ const CategoriesToggle = () => {
         showsHorizontalScrollIndicator={false}
         scrollEnabled={false}
       >
-        <Box
-          width={width - theme.spacing.L * 2}
-          flex={1}
-          backgroundColor="danger"
-        >
-          <Box flex={1} backgroundColor="dark">
-            <Text>Box 1</Text>
-          </Box>
+        <Box width={width - theme.spacing.L * 2} flex={1}>
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            ItemSeparatorComponent={() => <Box height={12} />}
+          />
         </Box>
         <Box width={width - theme.spacing.L * 2} flex={1}>
           <Box
