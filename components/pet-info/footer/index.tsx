@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Text } from "../../index";
 import WeightToggle from "./WeightToggle";
 import CategoriesToggle from "./CategoriesToggle";
-import Test from "./Test";
 
 const index = () => {
   return (

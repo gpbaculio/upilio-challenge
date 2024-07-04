@@ -8,7 +8,6 @@ import {
 } from "react-native-reanimated";
 
 import { AnimatedView, TouchableOpacityBox, Text, Box } from "../../index";
-import Sample from "./Sample";
 import theme from "@/constants/restyleTheme";
 import { ScrollView } from "react-native-gesture-handler";
 

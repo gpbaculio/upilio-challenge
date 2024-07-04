@@ -8,11 +8,10 @@ import {
 } from "react-native-reanimated";
 
 import { AnimatedView, TouchableOpacityBox, Text, Box } from "../../index";
-import Test from "./Test";
 
 import theme from "@/constants/restyleTheme";
 
-const ToggleSwitch = () => {
+const WeightToggle = () => {
   const [isKg, setIsKg] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const toggleValue = useSharedValue(1);
@@ -79,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ToggleSwitch;
+export default WeightToggle;
