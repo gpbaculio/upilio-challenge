@@ -6,9 +6,9 @@ import {
   withTiming,
   runOnJS,
 } from "react-native-reanimated";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { AnimatedView, TouchableOpacityBox, Text, Box } from "../../index";
+import WeightItem from "./weight/item";
 import theme from "@/constants/restyleTheme";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 
@@ -27,34 +27,6 @@ const DATA: Item[] = [
   { id: "1", title: "Item 1" },
   { id: "2", title: "Item 2" },
 ];
-
-const ItemComponent: React.FC<{ title: string }> = ({ title }) => (
-  <Box
-    width="98%"
-    borderColor="light"
-    borderWidth={1}
-    alignSelf="center"
-    backgroundColor="white"
-    p="M"
-    borderRadius={4}
-    flexDirection="row"
-    alignItems="center"
-    style={{ ...theme.shadows["sm"] }}
-    justifyContent="space-between"
-  >
-    <Box flexDirection="row" alignItems="center">
-      <Box backgroundColor="light" p="XS" borderRadius={4}>
-        <FontAwesome name="stethoscope" size={24} color="purple" />
-      </Box>
-      <Box ml="S">
-        <Text fontWeight="600">2.00 lbs</Text>
-        <Text opacity={0.6}>11/12/2023</Text>
-      </Box>
-    </Box>
-
-    <FontAwesome name="trash" size={24} color="red" />
-  </Box>
-);
 
 const CategoriesToggle = () => {
   const { width } = useWindowDimensions();
@@ -89,7 +61,7 @@ const CategoriesToggle = () => {
   const id = useId();
 
   const renderItem = ({ item }: { item: Item }) => (
-    <ItemComponent title={item.title} />
+    <WeightItem title={item.title} />
   );
 
   return (
