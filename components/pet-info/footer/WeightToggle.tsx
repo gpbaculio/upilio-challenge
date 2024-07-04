@@ -8,6 +8,7 @@ import {
 } from "react-native-reanimated";
 
 import { AnimatedView, TouchableOpacityBox, Text, Box } from "../../index";
+import Test from "./Test";
 
 import theme from "@/constants/restyleTheme";
 

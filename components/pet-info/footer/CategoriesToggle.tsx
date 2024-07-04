@@ -1,4 +1,4 @@
-import React, { useId, useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import {
   useSharedValue,
@@ -8,8 +8,9 @@ import {
 } from "react-native-reanimated";
 
 import { AnimatedView, TouchableOpacityBox, Text, Box } from "../../index";
-
+import Sample from "./Sample";
 import theme from "@/constants/restyleTheme";
+import { ScrollView } from "react-native-gesture-handler";
 
 const buttons = [
   { label: "Weight" },
@@ -18,13 +19,19 @@ const buttons = [
 ];
 
 const CategoriesToggle = () => {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const [isAnimating, setIsAnimating] = useState(false);
-  const toggleValue = useSharedValue(1);
+  const toggleValue = useSharedValue(0);
+
+  const scrollRef = useRef<ScrollView>(null);
 
   const handleToggle = (index: number) => {
     setIsAnimating(true); // multiple press handler
     toggleValue.value = index;
+    scrollRef?.current?.scrollTo({
+      x: index * width - theme.spacing.L * 2,
+      animated: true,
+    });
   };
 
   const knobStyle = useAnimatedStyle(() => ({
@@ -44,40 +51,79 @@ const CategoriesToggle = () => {
   const id = useId();
 
   return (
-    <Box style={styles.switchContainer} mt="L">
-      <Box
-        flexDirection="row"
-        position="absolute"
-        justifyContent="space-around"
-        flex={1}
-        width="100%"
-        opacity={0.5}
-      >
-        {buttons.map((b, i) => (
-          <TouchableOpacityBox
-            key={`${id}-${i}`}
-            flex={1}
-            disabled={isAnimating}
-            onPress={() => {
-              handleToggle(i);
-            }}
-          >
-            <Text textAlign="center">{b.label}</Text>
-          </TouchableOpacityBox>
-        ))}
+    <Box flex={1}>
+      <Box style={styles.switchContainer} mt="L">
+        <Box
+          flexDirection="row"
+          position="absolute"
+          justifyContent="space-around"
+          flex={1}
+          width="100%"
+          opacity={0.5}
+        >
+          {buttons.map((b, i) => (
+            <TouchableOpacityBox
+              key={`${id}-${i}`}
+              flex={1}
+              disabled={isAnimating}
+              onPress={() => {
+                handleToggle(i);
+              }}
+            >
+              <Text textAlign="center">{b.label}</Text>
+            </TouchableOpacityBox>
+          ))}
+        </Box>
+        <AnimatedView
+          backgroundColor="white"
+          height={38}
+          width={"33%"}
+          borderRadius={4}
+          zIndex={1}
+          alignItems="center"
+          justifyContent="center"
+          style={[knobStyle, { ...theme.shadows["lg"] }]}
+        >
+          <Text fontWeight="bold">{buttons[toggleValue.value].label}</Text>
+        </AnimatedView>
       </Box>
-      <AnimatedView
-        backgroundColor="white"
-        height={38}
-        width={"33%"}
-        borderRadius={4}
-        zIndex={1}
-        alignItems="center"
-        justifyContent="center"
-        style={[knobStyle, { ...theme.shadows["lg"] }]}
+      <ScrollView
+        ref={scrollRef}
+        horizontal
+        contentContainerStyle={styles.scrollViewContainer}
+        showsHorizontalScrollIndicator={false}
+        scrollEnabled={false}
       >
-        <Text fontWeight="bold">{buttons[toggleValue.value].label}</Text>
-      </AnimatedView>
+        <Box
+          width={width - theme.spacing.L * 2}
+          flex={1}
+          backgroundColor="danger"
+        >
+          <Box flex={1} backgroundColor="dark">
+            <Text>Box 1</Text>
+          </Box>
+        </Box>
+        <Box width={width - theme.spacing.L * 2} flex={1}>
+          <Box
+            alignItems="center"
+            justifyContent="center"
+            flex={1}
+            backgroundColor="primary"
+          >
+            <Text fontWeight="bold">BODY CONDITION</Text>
+          </Box>
+        </Box>
+        <Box width={width - theme.spacing.L * 2} flex={1}>
+          <Box
+            alignItems="center"
+            justifyContent="center"
+            flex={1}
+            backgroundColor="light"
+          >
+            <Text fontWeight="bold">VET VISITS</Text>
+          </Box>
+        </Box>
+      </ScrollView>
     </Box>
   );
 };
@@ -91,6 +137,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 36,
     padding: 2,
+  },
+  scrollViewContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 20,
   },
 });
 
