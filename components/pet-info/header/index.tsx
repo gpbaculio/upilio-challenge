@@ -6,6 +6,7 @@ import ExpoImage from "../../ExpoImage";
 import { Box, Text, TouchableOpacityBox } from "../../index";
 
 import Detail from "./detail";
+import Name from "./name";
 
 const guineaPig = require("@/assets/images/guinea-pig.png");
 
@@ -19,12 +20,7 @@ const Header = () => (
       shadow="sm"
     />
     <Box flex={1} ml="L">
-      <Box flexDirection="row" alignItems="center" mb="XS">
-        <Text fontWeight="bold" fontSize={24} mr="XS">
-          Something
-        </Text>
-        <Ionicons name="male" size={27} color="black" />
-      </Box>
+      <Name name="Something" gender="male" />
       <Detail text="2011-06-25">
         <FontAwesome name="birthday-cake" size={17} color="brown" />
       </Detail>
