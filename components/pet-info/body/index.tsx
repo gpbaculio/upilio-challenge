@@ -9,9 +9,9 @@ const Body = () => {
       <Text fontSize={21} fontWeight={"bold"}>
         This Month - December
       </Text>
-      <Box flexDirection="row" justifyContent="space-between" mt="S">
-        <Info />
-        <Info />
+      <Box flexDirection="row" justifyContent="space-between" mt="M">
+        <Info text="Body weight" icon="barbell" info="2.00 lbs" />
+        <Info text="Body condition" icon="heartbeat" info="Emaciated" />
       </Box>
     </Box>
   );
