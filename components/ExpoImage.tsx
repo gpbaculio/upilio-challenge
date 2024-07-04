@@ -16,8 +16,8 @@ const ExpoImage: React.FC<ExpoImageBoxProps> = ({
   ...props
 }) => {
   return (
-    <Box style={[style, { ...theme.shadows[shadow] }]}>
-      <ExpoImageBox {...props} />
+    <Box elevation={2} style={[style, { ...theme.shadows[shadow] }]}>
+      <ExpoImageBox {...props} elevation={2} />
     </Box>
   );
 };

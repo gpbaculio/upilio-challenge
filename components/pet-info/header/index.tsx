@@ -13,6 +13,7 @@ const guineaPig = require("@/assets/images/guinea-pig.png");
 const Header = () => (
   <Box flexDirection="row">
     <ExpoImage
+      style={{ backgroundColor: "white", borderRadius: 100, height:100 }}
       borderRadius={100}
       source={guineaPig}
       width={100}
